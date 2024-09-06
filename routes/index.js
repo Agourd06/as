@@ -1,20 +1,9 @@
-// const express = require('express');
-// const app = express();
-// const port = 3000;
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/userController');
 
-// // Set the view engine to EJS
-// app.set('view engine', 'ejs');
+router.get('/', userController.getAllUsers);
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// }); 
+router.post('/create', userController.createUser);
 
-// // Define the route for '/test'
-// app.get('/test', (req, res) => {
-//   res.render('index', { errorMessage: res.locals.errorMessage });
-// });
-
-// // Start the server
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`);
-// });
+module.exports = router;

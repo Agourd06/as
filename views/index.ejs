@@ -1,27 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users</title>
 </head>
+
 <body>
     <h1>Users List</h1>
-    <ul>
-        <% users.forEach(user => { %>
-            <li><%= user.name %> (Age: <%= user.age %>)</li>
-        <% }); %>
-    </ul>
+    <div id="userList">
+        <% users.forEach(user=> { %>
+            <p>
+                <%= user.name %> (<%= user.age %> years old)
+            </p>
+            <% }); %>
+    </div>
 
     <h2>Add a New User</h2>
-    <form action="/users" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name">
-        <br>
-        <label for="age">Age:</label>
-        <input type="number" name="age" id="age">
-        <br>
+    <form id="userForm">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="number" name="age" placeholder="Age" required>
         <button type="submit">Add User</button>
     </form>
+    <script>
+        document.querySelector('#userForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const data = {};
+            const formData = new FormData(this);
+            formData.forEach((value, key) => data[key] = value);
+
+            fetch('/users/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        console.error('Error:', data.error);
+                    } else {
+                        document.querySelector('#userList').innerHTML += `<p>${data.name} (${data.age} years old)</p>`;
+                        document.querySelector('#userForm').reset();
+                    }
+                })
+                .catch(error => console.error('Fetch Error:', error));
+        });
+
+    </script>
+
 </body>
+
 </html>

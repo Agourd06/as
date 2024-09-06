@@ -14,13 +14,16 @@ exports.getAllUsers = (req, res) => {
 
 exports.createUser = (req, res) => {
     const { name, age } = req.body;
+console.log(req.body)
+   
+
     const sqlQuery = 'INSERT INTO users (name, age) VALUES (?, ?)';
     db.query(sqlQuery, [name, age], (err, result) => {
         if (err) {
             console.error('Error creating user:', err);
-            res.status(500).send('Server Error');
-        } else {
-            res.redirect('/users');
+            return res.status(500).json({ error: 'Server Error', details: err.message });
         }
+        res.status(201).json({ name, age });
     });
 };
+
