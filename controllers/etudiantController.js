@@ -15,11 +15,11 @@ const db = require('../config/database');
 
 
     exports.createStudent = (req, res) => {
-        const { name, prenom,birth,adress,inscriptionDate } = req.body;
+        const { name, prenom,birth,adress,inscriptionDate,email,password } = req.body;
     
 
-        const sqlQuery = 'INSERT INTO etudiant (name, prenom,birth,adress,inscriptionDate) VALUES (?, ?, ?, ?, ?)';
-        db.query(sqlQuery, [name, prenom,birth,adress,inscriptionDate], (err, result) => {
+        const sqlQuery = 'INSERT INTO etudiant (name, prenom,birth,adress,inscriptionDate,email,password) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        db.query(sqlQuery, [name, prenom,birth,adress,inscriptionDate,email,password], (err, result) => {
             if (err) {
                 console.error('Error creating user:', err);
                 return res.status(500).json({ error: 'Server Error', details: err.message });

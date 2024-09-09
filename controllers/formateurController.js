@@ -11,7 +11,37 @@ const db = require('../config/database');
             }
         });
     };
-
+    exports.checkForAccess = (req, res) => {
+        const { email  } = req.body; 
+    
+        const sqlQuery = 'SELECT id, name, email FROM users WHERE email = ?';
+    
+        db.query(sqlQuery, [email], (err, result) => {
+            if (err) {
+                console.error('Database query error:', err);
+                return res.status(500).json({ error: 'Server Error', details: err.message });
+            }
+    
+            if (result.length > 0) {
+                const user = result[0];
+                const userData = {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                };
+    
+           
+                res.status(200).json({
+                    message: 'User exists',
+                    user: userData,
+                });
+    
+            } else {
+                res.status(404).json({ message: 'User not found' });
+            }
+        });
+    };
+    
 
 
     exports.createFormateur = (req, res) => {
