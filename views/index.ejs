@@ -12,15 +12,18 @@
     <div id="userList">
         <% users.forEach(user=> { %>
             <p>
-                <%= user.name %> (<%= user.age %> years old)
+                <%= user.name %> (<%= user.prenom %> )
             </p>
             <% }); %>
     </div>
 
     <h2>Add a New User</h2>
     <form id="userForm">
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="number" name="age" placeholder="Age" required>
+        <input type="text" name="name" placeholder="First Name" required>
+        <input type="text" name="prenom" placeholder="Last Name" required>
+        <input type="date" name="birth" placeholder="Birthday Date" required>
+        <input type="text" name="adress" placeholder="Adress" required>
+        <input type="date" name="inscriptionDate" placeholder="inscriptionDate" required>
         <button type="submit">Add User</button>
     </form>
     <script>
@@ -30,7 +33,7 @@
             const formData = new FormData(this);
             formData.forEach((value, key) => data[key] = value);
 
-            fetch('/users/create', {
+            fetch('/etudiant/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -47,7 +50,7 @@
                     if (data.error) {
                         console.error('Error:', data.error);
                     } else {
-                        document.querySelector('#userList').innerHTML += `<p>${data.name} (${data.age} years old)</p>`;
+                        document.querySelector('#userList').innerHTML += `<p>${data.name} (${data.prenom} )</p>`;
                         document.querySelector('#userForm').reset();
                     }
                 })
