@@ -4,10 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Users</title>
 </head>
 
-<body>
+<body>  
+    <div class="container">
+ 
+    <%- include('sidebar') %>
+    
+    <div class="content">
     <h1>Users List</h1>
     <div id="userList">
         <% users.forEach(user=> { %>
@@ -23,9 +29,11 @@
         <input type="text" name="prenom" placeholder="Last Name" required>
         <input type="date" name="birth" placeholder="Birthday Date" required>
         <input type="text" name="adress" placeholder="Adress" required>
+       
         <input type="date" name="inscriptionDate" placeholder="inscriptionDate" required>
         <button type="submit">Add User</button>
     </form>
+</div>
     <script>
         document.querySelector('#userForm').addEventListener('submit', function (e) {
             e.preventDefault();
