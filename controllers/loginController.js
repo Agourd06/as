@@ -19,7 +19,8 @@ exports.checkForAccess = async (req, res) => {
         if (result.length > 0) {
             const user = result[0];
    
-
+            req.session.userId = user.id;
+            req.session.userRole = 'formateur';
             bcrypt.compare(password, user.password, (err, match) => {
                 if (err) {
                     console.error('error in comparison', err);
@@ -55,12 +56,10 @@ exports.checkForAccess = async (req, res) => {
 
                 if (result.length > 0) {
                     const user = result[0];
-                
+                    req.session.userId = user.id;
+                    req.session.userRole = 'etudiant';
 
-        if((await bcrypt.compare(password, user.password))){
-            console.log('is false')
-        }
-        console.log(user)
+       
                     bcrypt.compare(password, user.password, (err, match) => {
                         if (err) {
                             console.error('Password comparison error:', err);
@@ -69,7 +68,6 @@ exports.checkForAccess = async (req, res) => {
                                 details: err.message
                             });
                         }
-                        console.log('Password comparison result:', match);
                         if (match) {
                             return res.status(200).json({
                                 message: 'Etudiant exists',
@@ -93,3 +91,13 @@ exports.checkForAccess = async (req, res) => {
         }
     });
 };
+
+exports.logout = (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).send("Failed to logout");
+        }
+        res.redirect('log');
+    });
+}
+
