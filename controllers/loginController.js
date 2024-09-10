@@ -59,9 +59,7 @@ exports.checkForAccess = async (req, res) => {
                     req.session.userId = user.id;
                     req.session.userRole = 'etudiant';
 
-        if((await bcrypt.compare(password, user.password))){
-            console.log('is false')
-        }
+       
                     bcrypt.compare(password, user.password, (err, match) => {
                         if (err) {
                             console.error('Password comparison error:', err);
@@ -93,3 +91,13 @@ exports.checkForAccess = async (req, res) => {
         }
     });
 };
+
+exports.logout = (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).send("Failed to logout");
+        }
+        res.redirect('log');
+    });
+}
+

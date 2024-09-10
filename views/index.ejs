@@ -7,6 +7,10 @@
   </head>
 
   <body>
+    <form action="/logout" method="post">
+      <button type="submit">logout</button>
+    </form>
+
     <h1>Users List</h1>
     <div id="userList">
       <% users.forEach(user=> { %>
@@ -16,16 +20,19 @@
 
     <h2>Add a New User</h2>
     <form id="userForm">
-      <input type="text" name="name" placeholder="First Name" required />
-      <input type="text" name="prenom" placeholder="Last Name" required />
+      <input type="text" name="title" placeholder="First Name" required />
+      <input type="text" name="sujetId" value="1" placeholder="Adress" required />
+      <!-- <input type="text" name="prenom" placeholder="Last Name" required />
       <input type="date" name="birth" placeholder="Birthday Date" required />
-      <input type="text" name="adress" placeholder="Adress" required />
+      <input type="email" name="email" placeholder="email" required />
+      <input type="password" name="password" placeholder="password" required />
       <input
         type="date"
         name="inscriptionDate"
         placeholder="inscriptionDate"
         required
-      />
+      /> -->
+      
       <button type="submit">Add User</button>
     </form>
     <script>
@@ -37,11 +44,10 @@
           const formData = new FormData(this);
           formData.forEach((value, key) => (data[key] = value));
 
-          fetch("/etudiant/createStd", {
+          fetch("/formateur/SubSubjectAdd", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-
             },
             body: JSON.stringify(data),
           })

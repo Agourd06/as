@@ -16,17 +16,29 @@ exports.getAllFormateurs = (req, res) => {
 };
 
 exports.createFormateur = async (req, res) => {
-  const { name, prenom, birth, adress, specialite, email, password } = req.body;
+  const {
+    name,
+    prenom,
+    birth,
+    adress,
+    specialite,
+    email,
+    password
+  } = req.body;
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-  const insertStudentQuery = `
-            INSERT INTO formateur (name, prenom, birth, adress, specialite, email, password)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        `;
+  const insertFormateurQuery = `
+    INSERT INTO formateur (name, prenom, birth, adress, specialite, email, password)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
+  const formateurClassQuery = `
+    INSERT INTO class (formateur_id)
+    VALUES (?)
+  `;
 
   db.query(
-    insertStudentQuery,
+    insertFormateurQuery,
     [name, prenom, birth, adress, specialite, email, hashedPassword],
     (err, result) => {
       if (err) {
@@ -37,17 +49,42 @@ exports.createFormateur = async (req, res) => {
         });
       }
 
-      return res.status(201).json({
-        message: "Formateur created successfully",
-        studentId: result.insertId,
-      });
+      const formateurId = result.insertId;
+
+      db.query(
+        formateurClassQuery,
+        [formateurId],
+        (err, result) => {
+          if (err) {
+            console.error("Database insert error:", err);
+            return res.status(500).json({
+              error: "Server Error",
+              details: err.message,
+            });
+          }
+
+          return res.status(201).json({
+            message: "Formateur created successfully",
+            formateurId: formateurId,
+          });
+        }
+      );
     }
   );
 };
 
+
 exports.updateFormateur = (req, res) => {
-  const { id } = req.params;
-  const { name, prenom, birth, adress, specialite } = req.body;
+  const {
+    id
+  } = req.params;
+  const {
+    name,
+    prenom,
+    birth,
+    adress,
+    specialite
+  } = req.body;
 
   const sqlQuery = `
             UPDATE formateur 
@@ -87,7 +124,9 @@ exports.updateFormateur = (req, res) => {
 };
 
 exports.deleteFormateur = (req, res) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
 
   const sqlQuery = "UPDATE formateur SET deleted_at = NOW() WHERE id = ?";
 
