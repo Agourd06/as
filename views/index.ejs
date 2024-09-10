@@ -37,10 +37,11 @@
           const formData = new FormData(this);
           formData.forEach((value, key) => (data[key] = value));
 
-          fetch("/etudiant/create", {
+          fetch("/etudiant/createStd", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+
             },
             body: JSON.stringify(data),
           })

@@ -4,6 +4,15 @@ const app = express();
 const etudiantRoutes = require('./routes/etudiantRoutes.js');
 const formateurRoutes = require('./routes/formateurRoutes.js');
 const loginRoutes = require('./routes/loginRoutes.js');
+const session = require('express-session');
+
+
+app.use(session({
+    secret: 'team1', 
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } 
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
