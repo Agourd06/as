@@ -1,6 +1,6 @@
 const db = require('../config/database');
 const bcrypt = require('bcrypt');
-const salt = bcrypt.genSaltSync(10);
+const saltRounds = bcrypt.genSaltSync(10);
 
 exports.getAllStudents = (req, res) => {
     const sqlQuery = 'SELECT * FROM etudiant WHERE deleted_at IS NULL';
@@ -30,22 +30,50 @@ exports.createStudent = (req, res) => {
         password
     } = req.body;
 
-   
-        bcrypt.hash(password, salt, (err, hashedPassword) => {
+    const formateurId = req.session.userId;
+
+    if (!formateurId) {
+        return res.status(401).json({
+            error: 'Unauthorized: No session ID found.'
+        });
+    }
+
+    bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+        if (err) {
+            console.error('Error hashing password:', err);
+            return res.status(500).json({
+                error: 'Server Error',
+                details: err.message
+            });
+        }
+
+        const getClassIdQuery = `'
+            SELECT id FROM class WHERE formateur_id = ?
+        `;
+
+        db.query(getClassIdQuery, [formateurId], (err, results) => {
             if (err) {
-                console.error('Error hashing password:', err);
+                console.error('Database query error for class ID:', err);
                 return res.status(500).json({
                     error: 'Server Error',
                     details: err.message
                 });
             }
 
-            const insertStudentQuery = `
-            INSERT INTO etudiant (name, prenom, birth, adress, inscriptionDate, email, password)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        `;
+            if (results.length === 0) {
+                return res.status(404).json({
+                    error: 'Class not found for the given formateur.'
+                });
+            }
 
-            db.query(insertStudentQuery, [name, prenom, birth, adress, inscriptionDate, email, hashedPassword], (err, result) => {
+            const classId = results[0].id;
+
+            const insertStudentQuery = `
+                INSERT INTO etudiant (name, prenom, birth, adress, inscriptionDate, email, password, class_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            `;
+
+            db.query(insertStudentQuery, [name, prenom, birth, adress, inscriptionDate, email, hashedPassword, classId], (err, result) => {
                 if (err) {
                     console.error('Database insert error:', err);
                     return res.status(500).json({
@@ -54,15 +82,15 @@ exports.createStudent = (req, res) => {
                     });
                 }
 
+
                 return res.status(201).json({
-                    message: 'Student created successfully',
-                    studentId: result.insertId
+                    message: 'Student created successfully and added to class',
+                   
                 });
             });
         });
- 
+    });
 };
-
 
 
 
