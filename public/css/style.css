@@ -6,9 +6,15 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    color: #333;
-    background-image: url('../public/image/board-5599231_1280.png');
+    background-color: #2b2626;
+    color: #eae3e3;
+    background-image: url('/public/image/board-5599231_1280.png');
+    display: grid;
+    /* justify-items: start; */
+    grid-template-rows: auto auto auto auto;
+    grid-template-columns: 280px auto auto auto;
+
+
 }
 
 .container {
@@ -16,6 +22,8 @@ body {
 }
 
 .sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 4;
     width: 280px;
     background-color:rgba(134, 167, 137, 1);
     /* padding: 15px; */
@@ -101,7 +109,7 @@ h2 {
 form {
     background: #f9f9f9;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: non;
     border-radius: 10px;
     max-width: 400px;
     margin: 0 auto;
@@ -140,6 +148,133 @@ form button:hover {
     padding: 15px;
 }
 
+/* login */
+
+#loginForm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.3); 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+#loginForm input[type="text"],
+#loginForm input[type="password"] {
+    width: 100%;
+    padding: 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#loginForm button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#loginForm button:hover {
+    background-color: #45a049;
+}
+
+
+#greatin-teacher {
+
+
+/* display: grid;
+grid-template-rows: auto auto auto auto; */
+}
+
+#greatin-teacher{
+
+    
+    align-self: center;
+ text-align: center;
+    grid-row: 1 / span 2;
+    grid-column: 2 / span 2;
+   
+    /* padding-left: 50px; */
+
+}
+
+#greatin-teacher h1{
+font-size: 60px;
+
+ color: #ccc;
+}
+
+
+.homet-content{
+    font-size: 50px;
+    grid-column: 2 /span 3 ;
+    grid-row: 3 / span 2;
+    align-self: center;
+    text-align: center;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 25px;
+    padding: 25px;
+}
+
+.homet-content > div {
+    background-color:rgba(134, 167, 137, 1);
+    /* border: 1px solid black; */
+    text-align: center;
+    font-size: 30px;
+    /* padding: px; */
+    padding-top: 25px;
+    padding-bottom: 25px;
+    grid-column: span 2;
+    border-radius: 5px;
+  }
+
+
+
+
+
+/* 
+
+#greatin-teacher {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    text-align: center;
+   
+}
+
+#greatin-teacher h1 {
+
+    font-size: 80px;
+    color: #ccc;
+
+   
+
+}
+.container {
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+   grid-template-columns: auto auto auto auto;
+}
+#homet-content{
+    font-size: 50px;
+    grid-column: 2;
+    grid-row: 3;
+    align-self: center;
+    text-align: center;
+
+} */
 
 @media (max-width: 768px) {
     .sidebar {
@@ -162,7 +297,7 @@ form button:hover {
     }
 }
 
-
+/*  */
 @media (max-width: 768px) {
     .sidebar {
         /* position: absolute;
@@ -171,6 +306,35 @@ form button:hover {
         height: 100vh; */
         display: none;
     }
+    #loginForm {
+        width: 90%; 
+        padding: 40px;
+    }
 
+    #loginForm input[type="text"],
+    #loginForm input[type="password"] {
+        padding: 15px; 
+    }
+
+    #loginForm button {
+        padding: 12px;
+    }
     
+}
+
+
+@media (max-width: 480px) {
+    #loginForm {
+        width: 80%; 
+        padding: 30px;
+    }
+
+    #loginForm input[type="text"],
+    #loginForm input[type="password"] {
+        padding: 10px; 
+    }
+
+    #loginForm button {
+        padding: 10px; 
+    }
 }
