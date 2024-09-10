@@ -1,64 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Users</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Users List</h1>
     <div id="userList">
-        <% users.forEach(user=> { %>
-            <p>
-                <%= user.name %> (<%= user.prenom %> )
-            </p>
-            <% }); %>
+      <% users.forEach(user=> { %>
+      <p><%= user.name %> (<%= user.prenom %> )</p>
+      <% }); %>
     </div>
 
     <h2>Add a New User</h2>
     <form id="userForm">
-        <input type="text" name="name" placeholder="First Name" required>
-        <input type="text" name="prenom" placeholder="Last Name" required>
-        <input type="date" name="birth" placeholder="Birthday Date" required>
-        <input type="text" name="adress" placeholder="Adress" required>
-        <input type="date" name="inscriptionDate" placeholder="inscriptionDate" required>
-        <button type="submit">Add User</button>
+      <input type="text" name="name" placeholder="First Name" required />
+      <input type="text" name="prenom" placeholder="Last Name" required />
+      <input type="date" name="birth" placeholder="Birthday Date" required />
+      <input type="text" name="adress" placeholder="Adress" required />
+      <input
+        type="date"
+        name="inscriptionDate"
+        placeholder="inscriptionDate"
+        required
+      />
+      <button type="submit">Add User</button>
     </form>
     <script>
-        document.querySelector('#userForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const data = {};
-            const formData = new FormData(this);
-            formData.forEach((value, key) => data[key] = value);
+      document
+        .querySelector("#userForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const data = {};
+          const formData = new FormData(this);
+          formData.forEach((value, key) => (data[key] = value));
 
-            fetch('/etudiant/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+          fetch("/etudiant/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.error) {
-                        console.error('Error:', data.error);
-                    } else {
-                        document.querySelector('#userList').innerHTML += `<p>${data.name} (${data.prenom} )</p>`;
-                        document.querySelector('#userForm').reset();
-                    }
-                })
-                .catch(error => console.error('Fetch Error:', error));
+            .then((data) => {
+              if (data.error) {
+                console.error("Error:", data.error);
+              } else {
+                document.querySelector(
+                  "#userList"
+                ).innerHTML += `<p>${data.name} (${data.prenom} )</p>`;
+                document.querySelector("#userForm").reset();
+              }
+            })
+            .catch((error) => console.error("Fetch Error:", error));
         });
-
     </script>
-
-</body>
-
+  </body>
 </html>
