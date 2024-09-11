@@ -2,12 +2,49 @@ const db = require('../config/database');
 const bcrypt = require('bcrypt');
 
 exports.checkForAccess = async (req, res) => {
-    const { email, password } = req.body;
+    const {
+        email,
+        password
+    } = req.body;
+
+
+    if (!email || !password) {
+        return res.status(400).json({
+            error: "All fields are required",
+        });
+    }
+    const sqlInjectionPattern = /('|"|;|--|\b(OR|AND|SELECT|INSERT|UPDATE|DELETE|DROP|TRUNCATE|UNION|ALTER|EXEC)\b)/i;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+]{6,}$/;
+
+    // check for email format if is it good
+    if (!emailPattern.test(email)) {
+        return res.status(400).json({
+          error: "Invalid email format",
+        });
+      }
+
+        // check for password format if is it good
+
+      if (!passwordPattern.test(password)) {
+        return res.status(400).json({
+          error: "Password must be at least 6 characters long and contain only valid characters",
+        });
+      }
+
+    // check for email and password format if is it good and avoid sql injections
+
+    
+      if (sqlInjectionPattern.test(email) || sqlInjectionPattern.test(password)) {
+        return res.status(400).json({
+          error: "Invalid characters detected",
+        });
+      }
 
     const checkFormateurQuery = 'SELECT id, email, password FROM formateur WHERE email = ?';
     const checkEtudiantQuery = 'SELECT id, email, password FROM etudiant WHERE email = ?';
 
-    db.query(checkFormateurQuery, [email], async(err, result) => {
+    db.query(checkFormateurQuery, [email], async (err, result) => {
         if (err) {
             console.error('Database query error:', err);
             return res.status(500).json({
@@ -18,7 +55,7 @@ exports.checkForAccess = async (req, res) => {
 
         if (result.length > 0) {
             const user = result[0];
-   
+
             req.session.userId = user.id;
             req.session.userRole = 'formateur';
             bcrypt.compare(password, user.password, (err, match) => {
@@ -45,7 +82,7 @@ exports.checkForAccess = async (req, res) => {
                 }
             });
         } else {
-            db.query(checkEtudiantQuery,  [email],async (err, result) => {
+            db.query(checkEtudiantQuery, [email], async (err, result) => {
                 if (err) {
                     console.error('Database query error:', err);
                     return res.status(500).json({
@@ -59,7 +96,7 @@ exports.checkForAccess = async (req, res) => {
                     req.session.userId = user.id;
                     req.session.userRole = 'etudiant';
 
-       
+
                     bcrypt.compare(password, user.password, (err, match) => {
                         if (err) {
                             console.error('Password comparison error:', err);
@@ -78,7 +115,7 @@ exports.checkForAccess = async (req, res) => {
                             });
                         } else {
                             return res.status(401).json({
-                                message:'mot de pass ghalat'
+                                message: 'mot de pass ghalat'
                             });
                         }
                     });
@@ -100,4 +137,3 @@ exports.logout = (req, res) => {
         res.redirect('log');
     });
 }
-

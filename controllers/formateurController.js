@@ -1,7 +1,9 @@
 const db = require("../config/database");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-exports.getAllFormateurs = (req, res) => {
+
+
+exports.getAllFormateurs = async (req, res) => {
   const sqlQuery = "SELECT * FROM formateur WHERE deleted_at IS NULL";
   db.query(sqlQuery, (err, results) => {
     if (err) {
@@ -16,6 +18,7 @@ exports.getAllFormateurs = (req, res) => {
 };
 
 exports.createFormateur = async (req, res) => {
+
   const {
     name,
     prenom,
@@ -25,6 +28,46 @@ exports.createFormateur = async (req, res) => {
     email,
     password
   } = req.body;
+
+  if (!name || !prenom || !birth || !adress || !specialite || !email || !password) {
+    return res.status(400).json({
+      error: "All fields are required",
+    });
+  }
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+]{6,}$/;
+ 
+    // check for email format if is it good
+    if (!emailPattern.test(email)) {
+      return res.status(400).json({
+        error: "Invalid email format",
+      });
+    }
+
+      // check for password format if is it good
+
+    if (!passwordPattern.test(password)) {
+      return res.status(400).json({
+        error: "Password must be at least 6 characters long and contain only valid characters",
+      });
+    }
+  
+    const checkEmailQuery = `
+      SELECT COUNT(*) AS count FROM formateur WHERE email = ?
+    `;
+    const [emailResult] =  db.query(checkEmailQuery, [email]);
+
+    if (emailResult[0].count > 0) {
+      return res.status(409).json({
+
+        error: "Email already exists",
+
+      });
+    }
+  
+
+
+
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
