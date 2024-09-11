@@ -8,12 +8,30 @@ body {
     font-family: Arial, sans-serif;
     background-color: #2b2626;
     color: #eae3e3;
-    background-image: url('/public/image/board-5599231_1280.png');
-    display: grid;
-    /* justify-items: start; */
-    grid-template-rows: auto auto auto auto;
-    grid-template-columns: 280px auto auto auto;
+    background-image: url('/image/board-5599231_1280.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
+
+}
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.716); 
+    z-index: -1; 
+  }
+
+.home-page{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around ;
+    align-items: center;
+    width: 100vw !important;
 
 }
 
@@ -21,43 +39,44 @@ body {
     display: flex;
 }
 
-.sidebar {
+#sidebar {
+    display: block;
     grid-column: 1;
     grid-row: 1 / span 4;
     width: 280px;
-    background-color:rgba(134, 167, 137, 1);
+    background-color: rgba(134, 167, 137, 1);
     /* padding: 15px; */
     height: 100vh;
     color: white;
-    border-top-right-radius: 50px; 
+    border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
 }
 
-.sidebar h2 {
+#sidebar h2 {
     text-align: center;
     /* margin-bottom: 20px; */
     padding: 15px;
 }
 
-.sidebar ul {
+#sidebar ul {
     list-style: none;
     padding: 10px;
     margin-left: 15px;
 }
 
-.sidebar ul li {
+#sidebar ul li {
     margin-bottom: 15px;
     padding-bottom: 25px;
 }
 
-.sidebar ul li a {
+#sidebar ul li a {
     color: white;
     text-decoration: none;
     font-size: 1.2em;
     padding: 5px;
 }
 
-.sidebar ul li a:hover {
+#sidebar ul li a:hover {
     background-color: #ccc;
     /* padding: 5px; */
     border-radius: 5px;
@@ -71,7 +90,7 @@ ul li a {
 }
 
 ul li a svg {
-    margin-right: 15px; 
+    margin-right: 15px;
 }
 
 /* 
@@ -157,7 +176,7 @@ form button:hover {
     transform: translate(-50%, -50%);
     width: 500px;
     padding: 50px;
-    background-color: rgba(255, 255, 255, 0.3); 
+    background-color: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
@@ -189,46 +208,47 @@ form button:hover {
 }
 
 
-#greatin-teacher {
+/* #greatin-teacher { */
 
 
 /* display: grid;
 grid-template-rows: auto auto auto auto; */
-}
+/* } */
 
-#greatin-teacher{
+#greatin-teacher {
 
-    
+
     align-self: center;
- text-align: center;
+    text-align: center;
     grid-row: 1 / span 2;
     grid-column: 2 / span 2;
-   
+    
+
     /* padding-left: 50px; */
 
 }
 
-#greatin-teacher h1{
-font-size: 60px;
+#greatin-teacher h1 {
+    font-size: 60px;
 
- color: #ccc;
+    color: #575757;
 }
 
 
-.homet-content{
+.homet-content {
+    width: 100%;
     font-size: 50px;
-    grid-column: 2 /span 3 ;
-    grid-row: 3 / span 2;
+    display: grid;
+    grid-template-columns: repeat(4, 2fr);
+    gap: 15px;
     align-self: center;
     text-align: center;
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    gap: 25px;
+        
     padding: 25px;
 }
 
-.homet-content > div {
-    background-color:rgba(134, 167, 137, 1);
+.homet-content>div {
+    background-color: rgba(134, 167, 137, 1);
     /* border: 1px solid black; */
     text-align: center;
     font-size: 30px;
@@ -237,7 +257,7 @@ font-size: 60px;
     padding-bottom: 25px;
     grid-column: span 2;
     border-radius: 5px;
-  }
+}
 
 
 
@@ -277,26 +297,11 @@ font-size: 60px;
 } */
 
 /* 
-.content {
-    width: 80%;
-    padding: 20px;
-    background-color: #f1f4f1;
-}
 
-.stats {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
 
-.stat-item {
-    background-color: #c3dcc3;
-    padding: 15px;
-    border-radius: 10px;
-    width: 30%;
-    text-align: center;
-    font-size: 20px;
-}
+
+
+
 
 .students-list {
     background-color: #d6ecd6;
@@ -326,66 +331,141 @@ font-size: 60px;
 /* .actions i:hover {
     color: red;
 } */
+.content {
+    width: 80%;
+    
+    height: 35vh;
+}
+.stats {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.stat-item {
+    background-color: #B2C8BA;
+    height: 50%;
+    padding: 15px;
+    border-radius: 10px;
+    width: 20%;
+    font-size: 20px;
+    color: #577159;
+    display: block;
+
+}
+.stat-item span{
+    text-align: start;
+
+  
+}
+.stat-item span i{
+    font-size: 30px;
+    width: 40px !important;
+    height: 40px !important;
+    background-color: #D2E3C8;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #86A789;
+}
+.stat-item h2{
+    font-weight: 200;
+
+    text-align: end;
+}
+.students-list{
+    width: 90%;
+    margin: 0 auto 0 auto;
+   
+    color: #86A789;
+}
+.student-item {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    justify-content: center;
+    padding: 0 30px 0 30px;
+}
+.actions{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 20px;
+    background-color: #D2E3C8;
+    padding: 18px;
+    border-radius: 20px;
+}
+
+
 
 @media (max-width: 768px) {
-    .sidebar {
+    #sidebar {
+        display: none;
         position: absolute;
-        left: -280px; 
+        left: -280px;
         transition: left 0.3s ease;
         height: 100vh;
     }
 
-    .sidebar.active {
-        left: 0; 
+    #sidebar.active {
+        left: 0;
     }
 
     .burger {
-        display: block;  
+        display: block;
     }
 
     .content {
-        padding: 20px 10px; 
+        padding: 20px 10px;
     }
 }
 
 /*  */
 @media (max-width: 768px) {
-    .sidebar {
+    #sidebar {
         /* position: absolute;
         left: -280px; 
         transition: left 0.3s ease;
         height: 100vh; */
         display: none;
     }
+
     #loginForm {
-        width: 90%; 
+        width: 90%;
         padding: 40px;
     }
 
     #loginForm input[type="text"],
     #loginForm input[type="password"] {
-        padding: 15px; 
+        padding: 15px;
     }
 
     #loginForm button {
         padding: 12px;
     }
-    
+
 }
 
 
 @media (max-width: 480px) {
     #loginForm {
-        width: 80%; 
+        width: 80%;
         padding: 30px;
     }
 
     #loginForm input[type="text"],
     #loginForm input[type="password"] {
-        padding: 10px; 
+        padding: 10px;
     }
 
     #loginForm button {
-        padding: 10px; 
+        padding: 10px;
     }
 }

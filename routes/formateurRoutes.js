@@ -6,8 +6,8 @@ const subjectController = require('../controllers/subjectController');
 const levelController = require('../controllers/levelController');
 const checkRole = require('../middleware/checkRole');
 
-router.get('/', checkRole('formateur'), formateurController.getAllFormateurs);
-router.get('/studPage',checkRole('formateur'), etudiantController.getAllStudents);
+// router.get('/', checkRole('formateur'), formateurController.getAllFormateurs);
+router.get('/stats',checkRole('formateur'), etudiantController.getAllStudents);
 
 router.get('/home', checkRole('formateur'), (req, res) => {
     res.render('formateur/formateur');
