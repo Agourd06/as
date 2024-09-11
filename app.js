@@ -5,7 +5,7 @@ const etudiantRoutes = require('./routes/etudiantRoutes.js');
 const formateurRoutes = require('./routes/formateurRoutes.js');
 const loginRoutes = require('./routes/loginRoutes.js');
 const session = require('express-session');
-
+// const statsRoutes = require('./routes/statsRoutes');
 
 app.use(session({
     secret: 'team1', 
@@ -32,6 +32,8 @@ app.use('/', loginRoutes);
       
 //     });
 // });
+
+
 
 const PORT = process.env.PORT || 3000;
 

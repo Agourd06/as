@@ -4,10 +4,10 @@ const formateurController = require('../controllers/formateurController');
 const etudiantController = require('../controllers/etudiantController');
 const subjectController = require('../controllers/subjectController');
 const levelController = require('../controllers/levelController');
+const statsController = require('../controllers/statsController');
 const checkRole = require('../middleware/checkRole');
 
-// router.get('/', checkRole('formateur'), formateurController.getAllFormateurs);
-router.get('/stats',checkRole('formateur'), etudiantController.getAllStudents);
+router.get('/studPage',checkRole('formateur'), etudiantController.getAllStudents);
 
 router.get('/home', checkRole('formateur'), (req, res) => {
     res.render('formateur/formateur');
@@ -48,6 +48,11 @@ router.post('/createLevel',  levelController.createLevel);
 // ------------------------Level CRUD------------------------
 
 
+
+
+//--------------------------stats--------------------------------
+
+router.get('/stats', statsController.getStats);
 
 
 module.exports = router;

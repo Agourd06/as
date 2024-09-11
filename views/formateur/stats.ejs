@@ -11,40 +11,28 @@
 <body>
     <div class="container">
         <%- include('../sidebar') %>
-
+      
        
         <main class="content">
             <div class="stats">
-                <div class="stat-item"><span><i class='bx bxs-user'></i></span><h2>35 students</h2></div>
+                <div class="stat-item"><span><i class='bx bxs-user'></i></span><h2><%= stats.etudiants %> students</h2></div>
                 <div class="stat-item"><span><i class='bx bx-detail'></i></span><h2>35 Test</h2></div>
                 <div class="stat-item"><span><i class='bx bx-message-rounded-error'></i></span><h2>35 Request</h2></div>
             </div>
             <div class="students-list">
                 <h2>List of students</h2>
+               
                 <div class="student-item">
+                      <% students.forEach(student => { %>
                     <div class="actions">
-                        <i class='bx bxs-user'></i> <p>.bxs-user:before</p>
+                       
+                        <i class='bx bxs-user'></i> <p><%= student.name %></p>
+                        
                     </div>
-                    <div class="actions">
-                        <i class='bx bxs-user'></i>   <p>.bxs-user:before</p>
-                    </div>
-                    <div class="actions">
-                        <i class='bx bxs-user'></i>    <p>.bxs-user:before</p>
-                    </div>
-                    <div class="actions">
-                        <i class='bx bxs-user'></i>    <p>.bxs-user:before</p>
-                    </div>
-                    <div class="actions">
-                        <i class='bx bxs-user'></i>    <p>.bxs-user:before</p>
-                    </div>
-                    <div class="actions">
-                        <i class='bx bxs-user'></i>    <p>.bxs-user:before</p>
-                    </div>
-                    <div class="actions">
-                        <i class='bx bxs-user'></i>    <p>.bxs-user:before</p>
-                    </div>
+                 
+                     <% }) %>
                 </div>
-              
+             
             </div>
         </main>
     </div>
