@@ -4,6 +4,7 @@ const formateurController = require('../controllers/formateurController');
 const etudiantController = require('../controllers/etudiantController');
 const subjectController = require('../controllers/subjectController');
 const levelController = require('../controllers/levelController');
+const statsController = require('../controllers/statsController');
 const checkRole = require('../middleware/checkRole');
 
 router.get('/', checkRole('formateur'), formateurController.getAllFormateurs);
@@ -47,6 +48,11 @@ router.post('/createLevel',  levelController.createLevel);
 // ------------------------Level CRUD------------------------
 
 
+
+
+//--------------------------stats--------------------------------
+
+router.get('/stats', statsController.getStats);
 
 
 module.exports = router;
