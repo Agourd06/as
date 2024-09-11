@@ -1,16 +1,15 @@
 
 const Stats = require('../models/statsModel');
 
-const getStats = async (req, res) => {
+exports.getStats = async (req, res) => {
   try {
     const stats = await Stats.getStats();
-    res.render('formateur/stats', { stats });
+    const students = await Stats.getStudents();
+    res.render('formateur/stats', { stats, students });
   } catch (error) {
     console.error('Error fetching stats:', error);
     res.status(500).send('Error fetching stats');
   }
 };
 
-module.exports = {
-  getStats,
-};
+

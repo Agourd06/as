@@ -10,7 +10,7 @@ exports.getAllStudents = (req, res) => {
             res.status(500).send('Server Error');
         } else {
             res.render('formateur/stats', {
-                users: results
+                students: results
             });
         }
     });

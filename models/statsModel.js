@@ -16,8 +16,21 @@ const Stats = {
         });
       });
     });
+  },
+
+  getStudents: async () => {
+    return new Promise((resolve, reject) => {
+      
+      connection.query('SELECT * FROM etudiant', (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(results); 
+      });
+    });
   }
 };
+
 
 module.exports = Stats;
 

@@ -7,7 +7,6 @@ const levelController = require('../controllers/levelController');
 const statsController = require('../controllers/statsController');
 const checkRole = require('../middleware/checkRole');
 
-router.get('/', checkRole('formateur'), formateurController.getAllFormateurs);
 router.get('/studPage',checkRole('formateur'), etudiantController.getAllStudents);
 
 router.get('/home', checkRole('formateur'), (req, res) => {

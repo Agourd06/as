@@ -3,19 +3,20 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 
-exports.getAllFormateurs = async (req, res) => {
-  const sqlQuery = "SELECT * FROM formateur WHERE deleted_at IS NULL";
-  db.query(sqlQuery, (err, results) => {
-    if (err) {
-      console.error("Error fetching formateurs:", err);
-      res.status(500).send("Server Error");
-    } else {
-      res.render("index", {
-        users: results,
-      });
-    }
-  });
-};
+// exports.getAllFormateurs = async (req, res) => {
+//   const sqlQuery = "SELECT * FROM formateur WHERE deleted_at IS NULL";
+//   db.query(sqlQuery, (err, results) => {
+//     if (err) {
+//       console.error("Error fetching formateurs:", err);
+//       res.status(500).send("Server Error");
+//     } else {
+//       res.render("index", {
+//         users: results,
+//       });
+//     }
+//   });
+// };
+
 
 exports.createFormateur = async (req, res) => {
 
@@ -30,6 +31,7 @@ exports.createFormateur = async (req, res) => {
   } = req.body;
 
   if (name  == ''|| prenom == '' || birth == '' || adress =='' || specialite  == ''|| email =='' || password =='') {
+
     return res.status(400).json({
       error: "All fields are required",
     });
@@ -167,6 +169,7 @@ exports.updateFormateur = (req, res) => {
       });
     }
   );
+
 };
 
 
