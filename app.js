@@ -25,6 +25,13 @@ app.use('/etudiant', etudiantRoutes);
 app.use('/formateur', formateurRoutes);
 app.use('/', loginRoutes);
 
+// app.get('/user', (req, res) => {
+//     res.render('layout', {
+//         title: 'Home Page',
+//         body: 'register'
+      
+//     });
+// });
 
 const PORT = process.env.PORT || 3000;
 

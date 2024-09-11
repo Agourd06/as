@@ -9,7 +9,7 @@ exports.getAllStudents = (req, res) => {
             console.error('Error fetching students:', err);
             res.status(500).send('Server Error');
         } else {
-            res.render('index', {
+            res.render('formateur/stats', {
                 users: results
             });
         }
@@ -84,7 +84,7 @@ exports.createStudent = (req, res) => {
             });
         }
 
-        const getClassIdQuery = `
+        const getClassIdQuery = `'
             SELECT id FROM class WHERE formateur_id = ?
         `;
 

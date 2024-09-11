@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Users</title>
   </head>
 
-  <body>
-    <form action="/logout" method="post">
-      <button type="submit">logout</button>
-    </form>
-
+<body>  
+    <div class="container">
+ 
+    <%- include('sidebar') %>
+    
+    <div class="content">
     <h1>Users List</h1>
     <div id="userList">
       <% users.forEach(user=> { %>
@@ -18,23 +21,17 @@
       <% }); %>
     </div>
 
-    <h2>Add a New User</h2>
+    <h2>Add a New User</h2> 
     <form id="userForm">
-      <input type="text" name="title" placeholder="First Name" required />
-      <input type="text" name="sujetId" value="1" placeholder="Adress" required />
-      <!-- <input type="text" name="prenom" placeholder="Last Name" required />
-      <input type="date" name="birth" placeholder="Birthday Date" required />
-      <input type="email" name="email" placeholder="email" required />
-      <input type="password" name="password" placeholder="password" required />
-      <input
-        type="date"
-        name="inscriptionDate"
-        placeholder="inscriptionDate"
-        required
-      /> -->
-      
-      <button type="submit">Add User</button>
+        <input type="text" name="name" placeholder="First Name" required>
+        <input type="text" name="prenom" placeholder="Last Name" required>
+        <input type="date" name="birth" placeholder="Birthday Date" required>
+        <input type="text" name="adress" placeholder="Adress" required>
+       
+        <input type="date" name="inscriptionDate" placeholder="inscriptionDate" required>
+        <button type="submit">Add User</button>
     </form>
+</div>
     <script>
       document
         .querySelector("#userForm")
@@ -44,7 +41,7 @@
           const formData = new FormData(this);
           formData.forEach((value, key) => (data[key] = value));
 
-          fetch("/formateur/SubSubjectAdd", {
+          fetch("/formateur/createFormateur", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

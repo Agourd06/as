@@ -1,0 +1,391 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2b2626;
+    color: #eae3e3;
+    background-image: url('/public/image/board-5599231_1280.png');
+    display: grid;
+    /* justify-items: start; */
+    grid-template-rows: auto auto auto auto;
+    grid-template-columns: 280px auto auto auto;
+
+
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+    width: 280px;
+    background-color:rgba(134, 167, 137, 1);
+    /* padding: 15px; */
+    height: 100vh;
+    color: white;
+    border-top-right-radius: 50px; 
+    border-bottom-right-radius: 50px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    /* margin-bottom: 20px; */
+    padding: 15px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 10px;
+    margin-left: 15px;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+    padding-bottom: 25px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #ccc;
+    /* padding: 5px; */
+    border-radius: 5px;
+}
+
+ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+ul li a svg {
+    margin-right: 15px; 
+}
+
+/* 
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #444;
+}
+
+#userList {
+    margin-bottom: 30px;
+} */
+
+/* #userList p {
+    font-size: 1.2em;
+    padding: 10px;
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+} */
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+form {
+    background: #f9f9f9;
+    padding: 20px;
+    border: non;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+form input[type="text"],
+form input[type="date"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+form button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #007bff;
+    border: none;
+    color: white;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #0056b3;
+}
+
+
+.burger {
+    display: none;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 15px;
+}
+
+/* login */
+
+#loginForm {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.3); 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+#loginForm input[type="text"],
+#loginForm input[type="password"] {
+    width: 100%;
+    padding: 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#loginForm button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#loginForm button:hover {
+    background-color: #45a049;
+}
+
+
+#greatin-teacher {
+
+
+/* display: grid;
+grid-template-rows: auto auto auto auto; */
+}
+
+#greatin-teacher{
+
+    
+    align-self: center;
+ text-align: center;
+    grid-row: 1 / span 2;
+    grid-column: 2 / span 2;
+   
+    /* padding-left: 50px; */
+
+}
+
+#greatin-teacher h1{
+font-size: 60px;
+
+ color: #ccc;
+}
+
+
+.homet-content{
+    font-size: 50px;
+    grid-column: 2 /span 3 ;
+    grid-row: 3 / span 2;
+    align-self: center;
+    text-align: center;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 25px;
+    padding: 25px;
+}
+
+.homet-content > div {
+    background-color:rgba(134, 167, 137, 1);
+    /* border: 1px solid black; */
+    text-align: center;
+    font-size: 30px;
+    /* padding: px; */
+    padding-top: 25px;
+    padding-bottom: 25px;
+    grid-column: span 2;
+    border-radius: 5px;
+  }
+
+
+
+
+
+/* 
+
+#greatin-teacher {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    text-align: center;
+   
+}
+
+#greatin-teacher h1 {
+
+    font-size: 80px;
+    color: #ccc;
+
+   
+
+}
+.container {
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+   grid-template-columns: auto auto auto auto;
+}
+#homet-content{
+    font-size: 50px;
+    grid-column: 2;
+    grid-row: 3;
+    align-self: center;
+    text-align: center;
+
+} */
+
+/* 
+.content {
+    width: 80%;
+    padding: 20px;
+    background-color: #f1f4f1;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    background-color: #c3dcc3;
+    padding: 15px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+    font-size: 20px;
+}
+
+.students-list {
+    background-color: #d6ecd6;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.student-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e5f4e5;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.student-item i {
+    margin-right: 10px;
+}
+
+.actions i {
+    margin-left: 10px;
+    cursor: pointer;
+} */
+
+/* .actions i:hover {
+    color: red;
+} */
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: absolute;
+        left: -280px; 
+        transition: left 0.3s ease;
+        height: 100vh;
+    }
+
+    .sidebar.active {
+        left: 0; 
+    }
+
+    .burger {
+        display: block;  
+    }
+
+    .content {
+        padding: 20px 10px; 
+    }
+}
+
+/*  */
+@media (max-width: 768px) {
+    .sidebar {
+        /* position: absolute;
+        left: -280px; 
+        transition: left 0.3s ease;
+        height: 100vh; */
+        display: none;
+    }
+    #loginForm {
+        width: 90%; 
+        padding: 40px;
+    }
+
+    #loginForm input[type="text"],
+    #loginForm input[type="password"] {
+        padding: 15px; 
+    }
+
+    #loginForm button {
+        padding: 12px;
+    }
+    
+}
+
+
+@media (max-width: 480px) {
+    #loginForm {
+        width: 80%; 
+        padding: 30px;
+    }
+
+    #loginForm input[type="text"],
+    #loginForm input[type="password"] {
+        padding: 10px; 
+    }
+
+    #loginForm button {
+        padding: 10px; 
+    }
+}
