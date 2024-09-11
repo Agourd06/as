@@ -1,12 +1,51 @@
 const db = require("../config/database");
 
 
+exports.getallSubject = async (req, res) => {
+
+  
+
+    const subjectQuery = `SELECT * FROM WHERE sujet_id = NULL`
+
+    db.query(subjectQuery,  (err, result) => {
+        if (err) {
+            console.error("Error fetching subjects:", err);
+            res.status(500).send("Server Error");
+          } else {
+            res.render("Subject Page here", {
+              subjects: result,
+            });
+          }
+    })
+}
+exports.getallSubSubject = async (req, res) => {
+
+  
+
+    const subSubjectQuery = `SELECT * FROM WHERE sujet_id != NULL`
+
+    db.query(subSubjectQuery,  (err, result) => {
+        if (err) {
+            console.error("Error fetching subjects:", err);
+            res.status(500).send("Server Error");
+          } else {
+            res.render("SubSubject Page here", {
+              subSubjects: result,
+            });
+          }
+    })
+}
 exports.createSubject = async (req, res) => {
 
     const {
         title
     } = req.body
 
+    if (!title) {
+        return res.status(400).json({
+          error: "All fields are required",
+        });
+      }
     const subjectQuery = `INSERT INTO sujet (title) VALUES  (?)`
 
     db.query(subjectQuery, [title], (err, result) => {
@@ -31,6 +70,12 @@ exports.createSubSubject = async (req, res) => {
         title,
         sujetId
     } = req.body
+
+    if (!title || !sujetId) {
+        return res.status(400).json({
+          error: "All fields are required",
+        });
+      }
 
     const subjectQuery = `INSERT INTO sujet (title,sujet_id) VALUES  (?, ?)`
 
