@@ -30,6 +30,7 @@ exports.createFormateur = async (req, res) => {
   if (name  == ''|| prenom == '' || birth == '' || adress =='' || specialite  == ''|| email =='' || password =='') {
 
 
+
     return res.status(400).json({
       error: "All fields are required",
     });
