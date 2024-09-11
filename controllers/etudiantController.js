@@ -1,25 +1,23 @@
-const db = require('../config/database');
-const bcrypt = require('bcrypt');
-const saltRounds = bcrypt.genSaltSync(10);
+const StudentModel = require('../models/etudiantModel');
 
-exports.getAllStudents = (req, res) => {
-    const sqlQuery = 'SELECT * FROM etudiant WHERE deleted_at IS NULL';
-    db.query(sqlQuery, (err, results) => {
-        if (err) {
-            console.error('Error fetching students:', err);
-            res.status(500).send('Server Error');
-        } else {
-            res.render('formateur/stats', {
-                students: results
-            });
-        }
+exports.getAllStudents = async (req, res) => {
+  try {
+    const students = await StudentModel.getAllStudents();
+
+    res.render('formateur/stats', {
+      students
     });
+  } catch (err) {
+    console.error('Error fetching students:', err);
+    res.status(500).send('Server Error');
+  }
 };
 
 
 
 
-exports.createStudent = (req, res) => {
+
+exports.createStudent = async (req, res) => {
     const {
         name,
         prenom,
@@ -32,38 +30,22 @@ exports.createStudent = (req, res) => {
 
     if (!name || !prenom || !birth || !adress || !inscriptionDate || !email || !password) {
         return res.status(400).json({
-            error: "All fields are required",
+            error: 'All fields are required'
         });
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+]{6,}$/;
 
-    // check for email format if is it good
     if (!emailPattern.test(email)) {
         return res.status(400).json({
-            error: "Invalid email format",
+            error: 'Invalid email format'
         });
     }
-
-    // check for password format if is it good
 
     if (!passwordPattern.test(password)) {
         return res.status(400).json({
-            error: "Password must be at least 6 characters long and contain only valid characters",
-        });
-    }
-
-    const checkEmailQuery = `
-      SELECT COUNT(*) AS count FROM etudiant WHERE email = ?
-    `;
-    const [emailResult] = db.query(checkEmailQuery, [email]);
-
-    if (emailResult[0].count > 0) {
-        return res.status(409).json({
-
-            error: "Email already exists",
-
+            error: 'Password must be at least 6 characters long and contain only valid characters'
         });
     }
 
@@ -75,65 +57,40 @@ exports.createStudent = (req, res) => {
         });
     }
 
-    bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
-        if (err) {
-            console.error('Error hashing password:', err);
-            return res.status(500).json({
-                error: 'Server Error',
-                details: err.message
+    try {
+        const emailExists = await StudentModel.checkEmailExists(email);
+        if (emailExists) {
+            return res.status(400).json({
+                error: 'Email already exists'
             });
         }
 
-        const getClassIdQuery = `'
-            SELECT id FROM class WHERE formateur_id = ?
-        `;
-
-        db.query(getClassIdQuery, [formateurId], (err, results) => {
-            if (err) {
-                console.error('Database query error for class ID:', err);
-                return res.status(500).json({
-                    error: 'Server Error',
-                    details: err.message
-                });
-            }
-
-            if (results.length === 0) {
-                return res.status(404).json({
-                    error: 'Class not found for the given formateur.'
-                });
-            }
-
-            const classId = results[0].id;
-
-            const insertStudentQuery = `
-                INSERT INTO etudiant (name, prenom, birth, adress, inscriptionDate, email, password, class_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            `;
-
-            db.query(insertStudentQuery, [name, prenom, birth, adress, inscriptionDate, email, hashedPassword, classId], (err, result) => {
-                if (err) {
-                    console.error('Database insert error:', err);
-                    return res.status(500).json({
-                        error: 'Server Error',
-                        details: err.message
-                    });
-                }
-
-
-                return res.status(201).json({
-                    message: 'Student created successfully and added to class',
-
-                });
-            });
+        await StudentModel.createStudent({
+            name,
+            prenom,
+            birth,
+            adress,
+            inscriptionDate,
+            email,
+            password
+        }, formateurId);
+        return res.status(201).json({
+            message: 'Student created successfully and added to class'
         });
-    });
+    } catch (err) {
+        console.error('Error creating student:', err.message);
+        return res.status(500).json({
+            error: 'Server Error',
+            details: err.message
+        });
+    }
 };
 
 
 
 
 
-exports.updateStudent = (req, res) => {
+exports.updateStudent = async (req, res) => {
     const {
         id
     } = req.params;
@@ -142,23 +99,25 @@ exports.updateStudent = (req, res) => {
         prenom,
         birth,
         adress,
-        inscriptionDate
+        inscriptionDate,
+        email
     } = req.body;
 
-    const sqlQuery = `
-            UPDATE etudiant 
-            SET name = ?, prenom = ?, birth = ?, adress = ?, inscriptionDate = ?
-            WHERE id = ?
-        `;
+    if (!name || !prenom || !birth || !adress || !inscriptionDate) {
+        return res.status(400).json({
+            error: 'All fields are required'
+        });
+    }
 
-    db.query(sqlQuery, [name, prenom, birth, adress, inscriptionDate, id], (err, result) => {
-        if (err) {
-            console.error('Error updating student:', err);
-            return res.status(500).json({
-                error: 'Server Error',
-                details: err.message
-            });
-        }
+    try {
+        const result = await StudentModel.updateStudent({
+            name,
+            prenom,
+            birth,
+            adress,
+            inscriptionDate,
+            email
+        }, id);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({
@@ -175,35 +134,35 @@ exports.updateStudent = (req, res) => {
             adress,
             inscriptionDate
         });
-    });
-};
-
-
-exports.deleteStudent = (req, res) => {
-    const {
-        id
-    } = req.params;
-
-    const sqlQuery = 'UPDATE etudiant SET deleted_at = NOW() WHERE id = ?';
-
-    db.query(sqlQuery, [id], (err, result) => {
-        if (err) {
-            console.error('Error soft deleting student:', err);
-            return res.status(500).json({
-                error: 'Server Error',
-                details: err.message
-            });
-        }
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({
-                error: 'Student not found'
-            });
-        }
-
-        res.status(200).json({
-            message: 'Student soft deleted successfully',
-            id
+    } catch (err) {
+        console.error('Error updating student:', err);
+        res.status(500).json({
+            error: 'Server Error',
+            details: err.message
         });
-    });
+    }
 };
+
+exports.deleteStudent = async (req, res, next) => {
+    const { id } = req.params;
+  
+    try {
+      const result = await StudentModel.deleteStudent(id);
+  
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ 
+          success: false, 
+          message: 'Student not found' 
+        });
+      }
+  
+      res.status(200).json({
+        success: true,
+        message: 'Deleted successfully',
+        result: result
+      });
+    } catch (error) {
+      console.error('Error in controller:', error.message);
+      next(new ApiError(`Error: ${error.message}`, 500));
+    }
+  };

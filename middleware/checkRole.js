@@ -1,6 +1,6 @@
 function checkRole(expectedRole) {
     return function(req, res, next) {
-        const userRole = req.session.userRole;;
+        const userRole = req.session.userRole;
 
         
         
