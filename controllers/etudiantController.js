@@ -9,7 +9,7 @@ exports.getAllStudents = (req, res) => {
             console.error('Error fetching students:', err);
             res.status(500).send('Server Error');
         } else {
-            res.render('index', {
+            res.render('formateur/stats', {
                 users: results
             });
         }
