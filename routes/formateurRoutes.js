@@ -3,6 +3,7 @@ const router = express.Router();
 const formateurController = require('../controllers/formateurController');
 const etudiantController = require('../controllers/etudiantController');
 const subjectController = require('../controllers/subjectController');
+const levelController = require('../controllers/levelController');
 const checkRole = require('../middleware/checkRole');
 
 router.get('/', checkRole('formateur'), formateurController.getAllFormateurs);
@@ -35,8 +36,16 @@ router.put('/deleteFormateur/:id', checkRole('formateur'), formateurController.d
 router.post('/SubjectAdd', checkRole('formateur'), subjectController.createSubject);
 router.post('/SubSubjectAdd', checkRole('formateur'), subjectController.createSubSubject);
 router.put('/SubjectUpdate/:id',checkRole('formateur'), subjectController.updateSubjects);
-router.put('/SubjectDelete/:id', subjectController.deleteSubjects);
+router.put('/SubjectDelete/:id', checkRole('formateur'),subjectController.deleteSubjects);
 // ------------------------subject CRUD------------------------
+
+
+// ------------------------Level CRUD------------------------
+router.post('/createLevel',  levelController.createLevel);
+
+
+// ------------------------Level CRUD------------------------
+
 
 
 

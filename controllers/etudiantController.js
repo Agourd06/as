@@ -30,6 +30,43 @@ exports.createStudent = (req, res) => {
         password
     } = req.body;
 
+    if (!name || !prenom || !birth || !adress || !inscriptionDate || !email || !password) {
+        return res.status(400).json({
+            error: "All fields are required",
+        });
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+]{6,}$/;
+
+    // check for email format if is it good
+    if (!emailPattern.test(email)) {
+        return res.status(400).json({
+            error: "Invalid email format",
+        });
+    }
+
+    // check for password format if is it good
+
+    if (!passwordPattern.test(password)) {
+        return res.status(400).json({
+            error: "Password must be at least 6 characters long and contain only valid characters",
+        });
+    }
+
+    const checkEmailQuery = `
+      SELECT COUNT(*) AS count FROM etudiant WHERE email = ?
+    `;
+    const [emailResult] = db.query(checkEmailQuery, [email]);
+
+    if (emailResult[0].count > 0) {
+        return res.status(409).json({
+
+            error: "Email already exists",
+
+        });
+    }
+
     const formateurId = req.session.userId;
 
     if (!formateurId) {
@@ -85,7 +122,7 @@ exports.createStudent = (req, res) => {
 
                 return res.status(201).json({
                     message: 'Student created successfully and added to class',
-                   
+
                 });
             });
         });
