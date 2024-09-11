@@ -27,7 +27,10 @@ exports.createFormateur = async (req, res) => {
     password
   } = req.body;
 
-  if (!name || !prenom || !birth || !adress || !specialite || !email || !password) {
+  if (name  == ''|| prenom == '' || birth == '' || adress =='' || specialite  == ''|| email =='' || password =='') {
+
+
+
     return res.status(400).json({
       error: "All fields are required",
     });
@@ -98,6 +101,7 @@ exports.updateFormateur = async (req, res) => {
         error: "Formateur not found",
       });
     }
+
 
     const result = await FormateurModel.updateFormateur(id, {
       name,
