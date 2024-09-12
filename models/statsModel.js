@@ -18,10 +18,10 @@ const Stats = {
     });
   },
 
-  getStudents: async () => {
+  getStudents: async (formateurId) => {
     return new Promise((resolve, reject) => {
-      
-      connection.query('SELECT * FROM etudiant', (err, results) => {
+      const getStudents = `SELECT * FROM etudiant JOIN class ON class.id = etudiant.class_id JOIN formateur ON formateur.id = class.formateur_id WHERE formateur.id = (?)`
+      connection.query(getStudents,formateurId, (err, results) => {
         if (err) {
           return reject(err);
         }

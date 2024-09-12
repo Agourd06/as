@@ -29,7 +29,8 @@ const QuizzModel = {
             );
         });
 
-    }
+    },
+
 }
 
 
