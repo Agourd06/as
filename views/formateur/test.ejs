@@ -6,12 +6,94 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
+   
 </head>
 <body>
     <div class="container">
         <%- include('../sidebar') %>
       
+        <h1>Create a Quiz</h1>
+
+        <form id="quizForm">
+            <div class="form-group">
+                <label for="quizName">Quiz Name</label>
+                <input type="text" id="quizName" name="quizName" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="question">Question</label>
+                <input type="text" id="question" name="question" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="response1">Response 1</label>
+                <input type="text" id="response1" name="response1" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="response2">Response 2</label>
+                <input type="text" id="response2" name="response2" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="response3">Response 3</label>
+                <input type="text" id="response3" name="response3" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="response4">Response 4</label>
+                <input type="text" id="response4" name="response4" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="topic">Select Topic</label>
+                <select id="topic" name="topic" required>
+                    <option value="" disabled selected>Select a topic</option>
+                    <option value="Math">Math</option>
+                    <option value="Science">Science</option>
+                    <option value="History">History</option>
+                  
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="level">Question Level</label>
+                <select id="level" name="level" required>
+                    <option value="" disabled selected>Select level</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="score">Score</label>
+                <input type="number" id="score" name="score" min="1" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="correctAnswer">Select the Correct Answer</label>
+                <select id="correctAnswer" name="correctAnswer" required>
+                    <option value="" disabled selected>Select the correct answer</option>
+                    <option value="1">Response 1</option>
+                    <option value="2">Response 2</option>
+                    <option value="3">Response 3</option>
+                    <option value="4">Response 4</option>
+                </select>
+            </div>
+    
+            <button type="button" id="addQuestionBtn">Add Another Question</button>
+            <br><br>
+            <button type="submit">Submit Quiz</button>
+            
+        </form>
+
+        <!-- <script>
+            document.getElementById('addQuestionBtn').addEventListener('click', function() {
+               
+                alert('Add another question functionality to be implemented.');
+            });
+        </script> -->
        
        
     </div>

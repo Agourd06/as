@@ -28,6 +28,22 @@ const Stats = {
         resolve(results); 
       });
     });
+  },
+
+  getTopics: async () => {
+    return new Promise((resolve, reject) => {
+     
+      connection.query('SELECT COUNT(*) as count FROM sujet', (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve({
+            topics: results[0].count, 
+          
+        });
+      });
+    });
   }
 };
 
