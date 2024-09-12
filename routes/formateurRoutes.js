@@ -5,12 +5,17 @@ const etudiantController = require('../controllers/etudiantController');
 const subjectController = require('../controllers/subjectController');
 const levelController = require('../controllers/levelController');
 const statsController = require('../controllers/statsController');
+const testController = require('..')
 const checkRole = require('../middleware/checkRole');
 
 router.get('/studPage',checkRole('formateur'), etudiantController.getAllStudents);
 
 router.get('/home', checkRole('formateur'), (req, res) => {
     res.render('formateur/formateur');
+});
+
+router.get('/test', checkRole('formateur'), (req, res) => {
+    res.render('formateur/test');
 });
 
 
@@ -53,6 +58,10 @@ router.post('/createLevel',  levelController.createLevel);
 //--------------------------stats--------------------------------
 
 router.get('/stats', statsController.getStats);
+
+//--------------------------test---------------------------
+
+// router.get('/quiz', testController.addtest);
 
 
 module.exports = router;
