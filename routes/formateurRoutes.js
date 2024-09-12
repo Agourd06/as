@@ -3,15 +3,21 @@ const router = express.Router();
 const formateurController = require('../controllers/formateurController');
 const etudiantController = require('../controllers/etudiantController');
 const subjectController = require('../controllers/subjectController');
-const levelController = require('../controllers/levelController');
+// const levelController = require('../controllers/levelController');
 const statsController = require('../controllers/statsController');
 const testController = require('..')
+
+const quizzController = require('../controllers/quizzController');
+const questionController = require('../controllers/questionController');
 const checkRole = require('../middleware/checkRole');
 
 router.get('/studPage',checkRole('formateur'), etudiantController.getAllStudents);
 
 router.get('/home', checkRole('formateur'), (req, res) => {
     res.render('formateur/formateur');
+});
+router.get('/question',  (req, res) => {
+    res.render('formateur/addQuizz');
 });
 
 router.get('/test', checkRole('formateur'), (req, res) => {
@@ -47,7 +53,7 @@ router.put('/SubjectDelete/:id', checkRole('formateur'),subjectController.delete
 
 
 // ------------------------Level CRUD------------------------
-router.post('/createLevel',  levelController.createLevel);
+// router.post('/createLevel',  levelController.createLevel);
 
 
 // ------------------------Level CRUD------------------------
@@ -63,5 +69,14 @@ router.get('/stats', statsController.getStats);
 
 // router.get('/quiz', testController.addtest);
 
+//--------------------------stats--------------------------------
 
+
+
+
+
+// ---------------------------Quizz-----------------------
+router.post('/createQuizz' ,quizzController.createQuizz)
+router.post('/createQuestion' ,questionController.createQuestion)
+// ---------------------------Quizz-----------------------
 module.exports = router;

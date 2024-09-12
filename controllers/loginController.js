@@ -17,14 +17,12 @@ exports.checkForAccess = async (req, res) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+]{6,}$/;
 
-    // check for email format if is it good
     if (!emailPattern.test(email)) {
         return res.status(400).json({
           error: "Invalid email format",
         });
       }
 
-        // check for password format if is it good
 
       if (!passwordPattern.test(password)) {
         return res.status(400).json({
@@ -32,7 +30,6 @@ exports.checkForAccess = async (req, res) => {
         });
       }
 
-    // check for email and password format if is it good and avoid sql injections
 
     
       if (sqlInjectionPattern.test(email) || sqlInjectionPattern.test(password)) {
