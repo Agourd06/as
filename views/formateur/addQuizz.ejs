@@ -1,81 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+
     <title>Document</title>
 </head>
+
 <body>
-    <form id="questionForm" method="POST" action="createQuestion">
-        <div>
-          <label>Contest</label>
-          <input type="text" name="contest" required />
-        </div>
-      
-        <div>
-          <label>Score</label>
-          <input type="number" name="score" required />
-        </div>
-      
-        <div>
-          <label>Subject</label>
-          <select name="subject" required>
-            <option value="1">Math</option>
-            <option value="2">Science</option>
-            <option value="2">History</option>
-          </select>
-        </div>
-      
-        <div>
-          <label>Answer 1</label>
-          <input type="text" name="answer" />
-          <input type="radio" name="trueAnswer" value="0" /> Correct
-        </div>
-      
-        <div>
-          <label>Answer 2</label>
-          <input type="text" name="answer" />
-          <input type="radio" name="trueAnswer" value="1" /> Correct
-        </div>
-      
-        <div>
-          <label>Answer 3</label>
-          <input type="text" name="answer" />
-          <input type="radio" name="trueAnswer" value="2" /> Correct
-        </div>
-      
-        <div>
-          <label>Answer 4</label>
-          <input type="text" name="answer" />
-          <input type="radio" name="trueAnswer" value="3" /> Correct
-        </div>
-      
-        <input type="hidden" name="answersArray" id="answersArray" />
-      
-        <button type="submit">Submit</button>
-      </form>
-      
-<script>
-document.getElementById('questionForm').addEventListener('submit', function(event) {
-    event.preventDefault();
 
-    const form = event.target;
-    const answers = [];
 
-    const answerInputs = form.querySelectorAll('input[name="answer"]');
-    const trueAnswerRadio = form.querySelector('input[name="trueAnswer"]:checked');
+    <form action="createQuizz" method="post">
+        <input type="text" name="contest" placeholder="contest">
+        <input type="datetime-local" name="startingDate" placeholder="starting Date">
+        <input type="number" name="trys" placeholder="Trys">
+        <input type="number" name="score" placeholder="score">
+        <button type="submit">add</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <div id="userList">
+        <% if (Quizzs && Quizzs.length> 0) { %>
+            <% Quizzs.forEach((quizz, index)=> { %>
+                <p>
+                    <%= quizz.contest %> (<%= quizz.tentative %> )
+                </p>
 
-    answerInputs.forEach((input, index) => {
-        answers.push({
-            answer: input.value,
-            isCorrect: trueAnswerRadio && trueAnswerRadio.value == index
+                <button type="button" onclick="toggleForm('<%= index %>')">Add question</button>
+
+                <form class="questionForm" id="questionForm_<%= index %>" method="POST" action="createQuestion"
+                    style="display: none;">
+                    <input type="hidden" name="quizzId" value="<%= quizz.id %>">
+                    <div>
+                        <label>Contest <%= quizz.id %></label>
+                        <input type="text" name="contest" required />
+                    </div>
+                    <input type="hidden" value="<%= quizz.id %>">
+
+                    <div>
+                        <label>Score</label>
+                        <input type="number" name="score" required />
+                    </div>
+
+                    <div>
+                        <label>Subject</label>
+                        <select name="subject" required>
+                            <option value="1">Math</option>
+                            <option value="2">Science</option>
+                            <option value="2">History</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Answer 1</label>
+                        <input type="text" name="answer" />
+                        <input type="radio" name="trueAnswer" value="0" /> Correct
+                    </div>
+
+                    <div>
+                        <label>Answer 2</label>
+                        <input type="text" name="answer" />
+                        <input type="radio" name="trueAnswer" value="1" /> Correct
+                    </div>
+
+                    <div>
+                        <label>Answer 3</label>
+                        <input type="text" name="answer" />
+                        <input type="radio" name="trueAnswer" value="2" /> Correct
+                    </div>
+
+                    <div>
+                        <label>Answer 4</label>
+                        <input type="text" name="answer" />
+                        <input type="radio" name="trueAnswer" value="3" /> Correct
+                    </div>
+
+                    <input type="hidden" name="answersArray" id="answersArray_<%= index %>" />
+
+                    <button type="submit">Submit</button>
+                </form>
+                <% }); %>
+
+                    <% } else { %>
+                        <p>No quizzes found.</p>
+                        <% } %>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <script>
+        function toggleForm(index) {
+            document.querySelectorAll('.questionForm').forEach(form => {
+                form.style.display = 'none';
+            });
+    
+            const form = document.getElementById('questionForm_' + index);
+            if (form) {
+                form.style.display = 'block';
+            }
+        }
+    
+        document.querySelectorAll('.questionForm').forEach((form, index) => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+    
+                const answers = [];
+                const answerInputs = form.querySelectorAll('input[name="answer"]');
+                const trueAnswerRadio = form.querySelector('input[name="trueAnswer"]:checked');
+    
+                answerInputs.forEach((input, i) => {
+                    answers.push({
+                        answer: input.value,
+                        isCorrect: trueAnswerRadio && trueAnswerRadio.value == i
+                    });
+                });
+    
+                const answersArrayInput = document.getElementById('answersArray_' + index);
+                if (answersArrayInput) {
+                    answersArrayInput.value = JSON.stringify(answers);
+                }
+    
+                form.submit();
+            });
         });
-    });
-
-    document.getElementById('answersArray').value = JSON.stringify(answers);
-
-    form.submit();
-});
-</script>
+    </script>
+    
 </body>
+
 </html>

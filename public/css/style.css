@@ -5,7 +5,10 @@
     position: relative;
     z-index: 2;
     }
-
+    
+.questionForm{
+    display: none;
+}
 
 body {
     position: relative;
