@@ -26,6 +26,7 @@ router.get('/test', checkRole('formateur'), (req, res) => {
 // ------------------------student CRUD------------------------
 router.post('/createStd', checkRole('formateur'), etudiantController.createStudent);
 // router.get('/getstudents', checkRole('formateur'), etudiantController.getAllStudents);
+// router.get('/getstudents', checkRole('formateur'), etudiantController.getAllStudents);
 router.put('/updateStd/:id',  etudiantController.updateStudent);
 router.put('/deleteStd/:id', checkRole('formateur'), etudiantController.deleteStudent);
 // ------------------------student CRUD------------------------
@@ -36,6 +37,7 @@ router.put('/deleteStd/:id', checkRole('formateur'), etudiantController.deleteSt
 // ------------------------formateur CRUD------------------------
 router.post('/createFormateur', formateurController.createFormateur);
 router.put('/updateFormateur/:id', checkRole('formateur'), formateurController.updateFormateur);
+router.get('/studentsManage',  formateurController.getStudents);
 router.put('/deleteFormateur/:id',  formateurController.deleteFormateur);
 // ------------------------formateur CRUD------------------------
 

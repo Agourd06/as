@@ -119,8 +119,19 @@ const FormateurModel = {
           });
         })
       },
-     
+      getStudents: async (formateurId) => {
+        return new Promise((resolve, reject) => {
+          const getStudents = `SELECT * FROM etudiant JOIN class ON class.id = etudiant.class_id JOIN formateur ON formateur.id = class.formateur_id WHERE formateur.id = (?)`
+          db.query(getStudents, formateurId, (err, results) => {
+            if (err) {
+              return reject(err);
+            }
+            resolve(results);
+          });
+        });
+      }
       
   };
+  
   
 module.exports = FormateurModel;
