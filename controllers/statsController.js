@@ -12,7 +12,7 @@ exports.getStats = async (req, res) => {
 
   } catch (error) {
     console.error('Error fetching stats:', error);
-    res.status(500).send('Error fetching stats');
+    res.redirect('/');
   }
 };
 

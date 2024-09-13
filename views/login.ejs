@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <title>Document</title>
 </head>
+
 <body>
-    
+    <div id="message">
+        <% if (message) { %>
+            <div class="alert">
+                <%= message %>
+            </div>
+            <% } %>
+    </div>
+
     <form id="loginForm">
         <label for="fname">E-mail address</label>
         <input type="text" name="email" placeholder="Email" required>
         <label for="fname">Password</label>
         <input type="password" name="password" placeholder="password" required>
         <button type="submit">login</button>
+        <div class="registerPath">
+            <p> Trainer with No account ? .</p> <a href="register"> Go as a New Trainer!</a>
+        </div>
     </form>
     <script src="/js/login.js"></script>
 </body>
+
 </html>

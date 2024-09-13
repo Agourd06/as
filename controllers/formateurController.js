@@ -67,10 +67,8 @@ exports.createFormateur = async (req, res) => {
 
     await FormateurModel.assignClass(formateurId);
 
-    return res.status(201).json({
-      message: "Formateur created successfully",
-      formateurId: formateurId,
-    });
+    const message = encodeURIComponent('Account Created Successfully!');
+    res.redirect(`/?message=${message}`);
   } catch (err) {
     console.error("Server error:", err);
     return res.status(500).json({

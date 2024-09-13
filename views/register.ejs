@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/register.css">
+    <title>Document</title>
+</head>
+<body>
+      <form  id="registerForm" method="post" action="formateur/createFormateur">
+        <div class="inputs-Grid">
+
+            <div>
+                <label for="fname">Name</label>
+                <input type="text" name="name" placeholder="First Name" required>
+            </div>
+
+            <div>
+                <label for="fname">last Name</label>
+                <input type="text" name="prenom" placeholder="Last Name" required>
+            </div>
+
+            <div>
+                <label for="fname">E-mail address</label>
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+
+            <div>
+
+                <label for="fname">Password</label>
+                <input type="password" name="password" placeholder="password" required>
+            </div>
+
+            <div>
+                <label for="fname">Birth Day</label>
+                <input type="date" name="birth"  required>
+            </div>
+
+            <div>
+                <label for="fname">Adress</label>
+                <input type="text" name="adress" placeholder="Adress" required>
+            </div>
+            <div class="specialite">
+                <label for="fname">Specialite</label>
+                <input type="text" name="specialite" placeholder="Specialite" required>
+            </div>
+
+        </div>
+        <button type="submit">Register</button>
+        <div class="loginPath">
+            <p> Already Have Account ? .</p> <a href="/"> Login Now!</a>
+        </div>
+    </form>
+    <script src="/js/login.js"></script>
+</body>
+</html>

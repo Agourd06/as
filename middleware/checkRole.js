@@ -5,13 +5,15 @@ function checkRole(expectedRole) {
         
         
         if (!userRole) {
-            return res.status(401).json({ message: 'Unauthorized: Role header is missing. ' + userRole });
+            res.redirect('/');
+
         }
 
         if (userRole === expectedRole) {
             next();
         } else {
-            res.status(403).json({ message: 'Forbidden: Access is denied.' });
+            res.redirect('/');
+
         }
     };
 }
