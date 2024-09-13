@@ -8,7 +8,8 @@ const QuizzModel = {
             contest,
             startingDate,
             trys,
-            score
+            score,
+            
         } = quizzData;
 
 
@@ -30,6 +31,18 @@ const QuizzModel = {
         });
 
     },
+    getTeacherQuizz: async(formateurId) => {
+            return new Promise((resolve, reject) => {
+              const getQuizzs = `SELECT * FROM quizz WHERE formateur_id = (?)`
+              db.query(getQuizzs, [formateurId], (err, results) => {
+                if (err) {
+                  return reject(err);
+                }
+                resolve(results);
+              });
+            });
+          
+    }
 
 }
 

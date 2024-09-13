@@ -6,7 +6,7 @@ const loginController = require('../controllers/loginController');
 router.post('/login', loginController.checkForAccess);
 router.post('/logout', loginController.logout);
 
-router.get('/log', (req, res) => {
+router.get('/', (req, res) => {
     res.render('login');  
 });
 

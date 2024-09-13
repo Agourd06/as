@@ -1,14 +1,14 @@
 const db = require("../config/database");
 
 const QuestionModel = {
-    insertQuestion: (contest, subject) => {
+    insertQuestion: (contest, subject, media, quizzId) => {
         const insertQuestionQuery = `
-            INSERT INTO question (contest, subject_id)
-            VALUES (?, ?)
+            INSERT INTO question (contest, subject_id,media,quizz_id)
+            VALUES (?, ?, ?, ?)
         `;
 
         return new Promise((resolve, reject) => {
-            db.query(insertQuestionQuery, [contest, subject], (err, result) => {
+            db.query(insertQuestionQuery, [contest, subject, media, quizzId], (err, result) => {
                 if (err) {
                     return reject(err);
                 }
@@ -19,16 +19,28 @@ const QuestionModel = {
 
     createLevel: (name, score, questionId) => {
         const scoreRanges = {
-            facile: { min: 0, max: 30 },
-            moyenne: { min: 31, max: 70 },
-            difficile: { min: 71, max: 100 }
+            facile: {
+                min: 0,
+                max: 30
+            },
+            moyenne: {
+                min: 31,
+                max: 70
+            },
+            difficile: {
+                min: 71,
+                max: 100
+            }
         };
 
         if (!scoreRanges[name]) {
             return Promise.reject(new Error("Invalid level name provided."));
         }
 
-        const { min, max } = scoreRanges[name];
+        const {
+            min,
+            max
+        } = scoreRanges[name];
         if (score < min || score > max) {
             return Promise.reject(new Error(`Score must be between ${min} and ${max} for the ${name} level.`));
         }
@@ -46,7 +58,7 @@ const QuestionModel = {
         });
     },
 
-    
+
 
     insertAnswers: (questionId, answers) => {
         const insertAnswerQuery = `

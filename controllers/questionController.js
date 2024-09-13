@@ -1,7 +1,7 @@
 const QuestionModel = require("../models/questionModel");
 
 exports.createQuestion = async (req, res) => {
-    const { contest, score, subject ,answersArray } = req.body;
+    const { contest, score, subject ,answersArray ,media,quizzId} = req.body;
 
     let answers = [];
     try {
@@ -20,7 +20,7 @@ exports.createQuestion = async (req, res) => {
     }
 
     try {
-        const questionId = await QuestionModel.insertQuestion(contest, subject);
+        const questionId = await QuestionModel.insertQuestion(contest, subject, media, quizzId);
         console.log(questionId);
         
         await QuestionModel.createLevel('facile', score, questionId);

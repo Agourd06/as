@@ -16,9 +16,7 @@ router.get('/studPage',checkRole('formateur'), etudiantController.getAllStudents
 router.get('/home', checkRole('formateur'), (req, res) => {
     res.render('formateur/formateur');
 });
-router.get('/question',  (req, res) => {
-    res.render('formateur/addQuizz');
-});
+
 
 router.get('/test', checkRole('formateur'), (req, res) => {
     res.render('formateur/test');
@@ -78,5 +76,6 @@ router.get('/stats', statsController.getStats);
 // ---------------------------Quizz-----------------------
 router.post('/createQuizz' ,quizzController.createQuizz)
 router.post('/createQuestion' ,questionController.createQuestion)
+router.get('/question', quizzController.getTeacherQuizz );
 // ---------------------------Quizz-----------------------
 module.exports = router;
