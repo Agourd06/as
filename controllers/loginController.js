@@ -131,6 +131,6 @@ exports.logout = (req, res) => {
         if (err) {
             return res.status(500).send("Failed to logout");
         }
-        res.redirect('log');
+        res.redirect('/');
     });
 }

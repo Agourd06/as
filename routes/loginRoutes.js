@@ -4,10 +4,16 @@ const loginController = require('../controllers/loginController');
 
 
 router.post('/login', loginController.checkForAccess);
-router.post('/logout', loginController.logout);
+router.get('/logout', loginController.logout);
 
 router.get('/', (req, res) => {
-    res.render('login');  
+    const message = req.query.message;
+
+    res.render('login' , {message});  
+});
+
+router.get('/register', (req, res) => {
+    res.render('register');  
 });
 
 module.exports = router;

@@ -35,3 +35,8 @@ document.querySelector('#loginForm').addEventListener('submit', function (e) {
             alert('An error occurred during login. Please try again.');
         });
 });
+
+
+setTimeout(function() {
+    document.getElementById('message').style.display = 'none';
+}, 4000);
