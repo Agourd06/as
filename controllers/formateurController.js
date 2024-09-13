@@ -162,3 +162,16 @@ exports.deleteFormateur = async (req, res) => {
     });
   }
 };
+
+exports.getStudents = async (req, res) => {
+  const formateurId = req.session.userId;
+  try {
+    
+    const students = await FormateurModel.getStudents(formateurId);
+    res.render('formateur/studentsManage', { students });
+
+  } catch (error) {
+    console.error('Error fetching students:', error);
+    res.redirect('/');
+  }
+};
