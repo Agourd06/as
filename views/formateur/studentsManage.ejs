@@ -9,8 +9,8 @@
         .container {
             width: 100%;
             max-width: 100vw;
-            justify-content: center;
-            padding: 34px;
+            /*justify-content: center;*/
+            /*padding: 34px;*/
         }
 
         h2 {
@@ -65,54 +65,42 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                /*padding: 15px;*/
             }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>Add a New Student</h2>
+    <%- include('../sidebar') %>
 
-    <form id="addStudentForm" method="post" action="student/createStudent">
-        <div class="inputs">
+    <main class="content">
 
-            <div>
-                <input type="text" id="studentName" name="first_name" placeholder="First Name" required>
+        <div class="students-list">
+            <h2>List of students</h2>
+            <div class="student-items">
+                <% students.forEach(student => { %>
+                    <div class="student-item">
+                        <i class='bx bxs-user'></i>
+                        <p><%= student.name %></p>
+                    </div>
+                <% }) %>
             </div>
 
-            <div>
-                <input type="text" id="studentLastName" name="last_name" placeholder="Last Name" required>
+            <!-- Button to add more students -->
+            <div class="add-student-btn">
+                <button onclick="addStudent()">Add More Students</button>
             </div>
-
-            <div>
-                <input type="email" id="studentEmail" name="email" placeholder="Email" required>
-            </div>
-
-            <div>
-                <input type="password" id="studentPassword" name="password" placeholder="Password" required>
-            </div>
-
-            <div>
-                <input type="date" id="studentBirthDate" name="birth_date" required>
-            </div>
-
-            <div>
-                <input type="text" id="studentAddress" name="address" placeholder="Address" required>
-            </div>
-
-            <div>
-                <input type="text" id="studentCourse" name="course" placeholder="Course of Study" required>
-            </div>
-
-            <div>
-                <input type="number" id="studentYear" name="enrollment_year" placeholder="Year" min="1900" max="2099" required>
-            </div>
-
         </div>
-        <button type="submit">Add Student</button>
-    </form>
+    </main>
 </div>
+
+<script>
+    function addStudent() {
+
+        window.location.href = '/formateur/addStd';
+    }
+</script>
 
 <script src="/js/student.js"></script>
 </body>

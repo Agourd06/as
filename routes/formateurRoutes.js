@@ -28,6 +28,9 @@ router.post('/createStd', checkRole('formateur'), etudiantController.createStude
 // router.get('/getstudents', checkRole('formateur'), etudiantController.getAllStudents);
 // router.get('/getstudents', checkRole('formateur'), etudiantController.getAllStudents);
 router.put('/updateStd/:id',  etudiantController.updateStudent);
+router.get('/addStd',  (req, res)=>{
+    res.render('formateur/addStudent.ejs');
+});
 router.put('/deleteStd/:id', checkRole('formateur'), etudiantController.deleteStudent);
 // ------------------------student CRUD------------------------
 
