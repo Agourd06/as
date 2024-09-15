@@ -167,7 +167,7 @@ exports.getStudents = async (req, res) => {
   const formateurId = req.session.userId;
   try {
     
-    const students = await FormateurModel.getStudents(formateurId);
+    const students = await FormateurModel.getStudents(1);
     res.render('formateur/studentsManage', { students });
 
   } catch (error) {

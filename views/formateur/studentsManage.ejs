@@ -1,23 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet">
+    <title>Students List</title>
+    <style>
+        .container {
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        h2 {
+            font-family: sans-serif;
+            text-align: center;
+            font-size: 24px;
+            color: #003b04;
+            margin-bottom: 20px;
+        }
+
+        .students-list {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #8ea692;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .add-student-btn {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .add-student-btn button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-student-btn button:hover {
+            background-color: #155f09;
+        }
+
+        .student-item {
+            display: grid;
+            grid-template-columns: 1fr 4fr 1fr;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .student-item i {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .student-info p {
+            margin: 0;
+            padding-left: 10px;
+            font-size: 18px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .actions i {
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .actions i:hover {
+            color: #ff4d4d;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                /*padding: 15px;*/
+            }
+
+            .students-list {
+                width: 90%;
+            }
+        }
+    </style>
 </head>
-
 <body>
-    <% if (students && students.length> 0) { %>
-        <% students.forEach((student, index)=> { %>
-            <p>
-                <%= student.name %> (<%= student.prenom %> )
-            </p>
-            <% }); %>
+<div class="container">
+    <%- include('../sidebar') %>
 
-                <% } else { %>
-                    <p>No quizzes found.</p>
-                    <% } %>
+    <main class="content">
+        <div class="students-list">
+            <h2>List of Students</h2>
+            <!-- Button to add more students -->
+            <div class="add-student-btn">
+                <button onclick="addStudent()">Add More Students</button>
+            </div>
+
+            <!-- Displaying the list of students -->
+            <div class="student-items">
+                <% students.forEach(student => { %>
+                    <div class="student-item">
+                        <div class="student-info">
+                            <i class='bx bxs-user'></i>
+                            <p><%= student.name %></p>
+                        </div>
+                        <div></div>
+                        <div class="actions">
+                            <i class='bx bx-edit'></i>
+                            <i class='bx bx-block'></i>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    function addStudent() {
+        window.location.href = '/formateur/addStd';  // Redirect to add student page
+    }
+</script>
+
 </body>
-
 </html>
