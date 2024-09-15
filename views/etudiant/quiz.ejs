@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>App quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        html{
+            font-size: 62.5%;
+        }
+        body{
+            background-color: #C2D9FF;
+            font-family: sans-serif;
+        }
+        .app{
+            background-color: #fff;
+            width: 90%;
+            max-width: 60rem;
+            margin: 10rem auto 0;
+            border-radius: 1rem;
+            padding: 3rem;
+        }
+        .app h1{
+            font-weight: 600;
+            font-size: 2.5rem;
+            color: #190482;
+            border-bottom: 1px solid #333;
+            padding-bottom: 3rem;
+        }
+        .quiz{
+            padding: 2rem 0;
+        }
+
+        .quiz h2{
+            font-size: 1.8rem;
+            color: #7752FE;
+            font-weight: 600;
+        }
+        .btn{
+            background-color: #fff;
+            color: #222;
+            font-weight: 500;
+            width: 100%;
+            border: 1px solid #222;
+            padding: 1rem;
+            margin: 1rem  0 ;
+            text-align: left;
+            border-radius: 4px ;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover{
+            background-color: #222;
+            color: #fff;
+        }
+        #next-btn{
+            background-color: #001e4d;
+            color: #ffff;
+            font-weight: 500;
+            width: 150px;
+            border: 0;
+            padding: 1rem;
+            margin: 2rem auto 0;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+        }
+
+        .correct{
+            background-color: #9aeabc;
+        }
+
+        .incorrect{
+            background-color: #ff9393;
+        }
+        .btn:disabled{
+            cursor: no-drop;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <h1>Simple Quiz</h1>
+    <div class="quiz">
+        <h2 id="question">Question goes here</h2>
+        <div id="answer-btns">
+            <button class="btn">Answer 1</button>
+            <button class="btn">Answer 2</button>
+            <button class="btn">Answer 3</button>
+            <button class="btn">Answer 4</button>
+        </div>
+    </div>
+    <button id="next-btn">
+        Next
+    </button>
+</div>
+<script>
+    const questions = [
+        {
+            question: "Which is the largest animal in the world?",
+            answers: [
+                {text: "Shark", correct: false},
+                {text: "Blue Whale", correct: true},
+                {text: "Elephant", correct: false},
+                {text: "Giraffe", correct: false},
+            ]
+        },
+        {
+            question: "What is the capital of France?",
+            answers: [
+                {text: "Berlin", correct: false},
+                {text: "Madrid", correct: false},
+                {text: "Paris", correct: true},
+                {text: "Lisbon", correct: false},
+            ]
+        },
+        {
+            question: "What is the smallest planet in our solar system?",
+            answers: [
+                {text: "Earth", correct: false},
+                {text: "Mars", correct: false},
+                {text: "Mercury", correct: true},
+                {text: "Venus", correct: false},
+            ]
+        },
+        {
+            question: "Who wrote 'Hamlet'?",
+            answers: [
+                {text: "Charles Dickens", correct: false},
+                {text: "Mark Twain", correct: false},
+                {text: "William Shakespeare", correct: true},
+                {text: "Jane Austen", correct: false},
+            ]
+        },
+        {
+            question: "What is the chemical symbol for water?",
+            answers: [
+                {text: "O2", correct: false},
+                {text: "H2O", correct: true},
+                {text: "CO2", correct: false},
+                {text: "HO2", correct: false},
+            ]
+        },
+        {
+            question: "Which planet is known as the Red Planet?",
+            answers: [
+                {text: "Earth", correct: false},
+                {text: "Mars", correct: true},
+                {text: "Jupiter", correct: false},
+                {text: "Saturn", correct: false},
+            ]
+        },
+        {
+            question: "What is the speed of light?",
+            answers: [
+                {text: "300,000 km/s", correct: true},
+                {text: "150,000 km/s", correct: false},
+                {text: "450,000 km/s", correct: false},
+                {text: "600,000 km/s", correct: false},
+            ]
+        },
+        {
+            question: "Who was the first President of the United States?",
+            answers: [
+                {text: "George Washington", correct: true},
+                {text: "Abraham Lincoln", correct: false},
+                {text: "Thomas Jefferson", correct: false},
+                {text: "John Adams", correct: false},
+            ]
+        },
+        {
+            question: "What is the largest desert in the world?",
+            answers: [
+                {text: "Sahara", correct: false},
+                {text: "Antarctic Desert", correct: true},
+                {text: "Arctic Desert", correct: false},
+                {text: "Gobi Desert", correct: false},
+            ]
+        },
+        {
+            question: "What is the tallest mountain in the world?",
+            answers: [
+                {text: "K2", correct: false},
+                {text: "Mount Everest", correct: true},
+                {text: "Kanchenjunga", correct: false},
+                {text: "Lhotse", correct: false},
+            ]
+        }
+    ];
+
+    const  questionElement = document.getElementById("question");
+    const  answerBtns = document.getElementById("answer-btns");
+    const  nextBtn = document.getElementById("next-btn");
+
+    let currenQuestionIndex = 0;
+    let score = 0;
+    function startQuiz(){
+        currenQuestionIndex = 0;
+        score = 0 ;
+        nextBtn.innerText = "Next";
+        showQuestion();
+    }
+
+    function selectAnswer(e) {
+        const selectBtn = e.target;
+        const isCorrect  = selectBtn.dataset.correct === "true";
+        if (isCorrect){
+            selectBtn.classList.add("correct");
+            score++;
+        }else {
+            selectBtn.classList.add("incorrect");
+        }
+        Array.from(answerBtns.children).forEach(btn => {
+            if (btn.dataset.correct === "true"){
+                btn.classList.add("correct")
+            }
+            btn.disabled = true;
+        })
+        nextBtn.style.display = "block";
+    }
+
+    function showQuestion(){
+
+        resetState();
+        let currentQuestion = questions[currenQuestionIndex];
+        let questionNo = currentQuestion + 1;
+        questionElement.innerText = currentQuestion.question;
+        currentQuestion.answers.forEach(answer => {
+            const button = document.createElement("button");
+            button.innerText = answer.text;
+            button.classList.add("btn");
+            answerBtns.appendChild(button);
+            if(answer.correct){
+                button.dataset.correct = answer.correct;
+            }
+            button.addEventListener("click", selectAnswer)
+
+        })
+    }
+
+    function resetState() {
+        nextBtn.style.display = "none";
+        while (answerBtns.firstChild){
+            answerBtns.removeChild(answerBtns.firstChild)
+        }
+    }
+
+    function showScore() {
+        resetState();
+        questionElement.innerHTML = `Your Score is ${score} out of ${questions.length} !`;
+        nextBtn.innerText = "Play Again";
+        nextBtn.style.display = "block";
+    }
+
+    function handelNextButton() {
+        currenQuestionIndex++;
+        if(currenQuestionIndex < questions.length){
+            showQuestion();
+        }else{
+            showScore();
+        }
+    }
+
+    nextBtn.addEventListener("click", ()=>{
+        if (currenQuestionIndex < questions.length){
+            handelNextButton();
+        }else{
+            startQuiz();
+        }
+    })
+
+    startQuiz();
+
+</script>
+</body>
+</html>
