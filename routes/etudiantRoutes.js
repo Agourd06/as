@@ -9,7 +9,8 @@ router.get('/home',checkRole('etudiant'), (req, res) => {
     res.render('etudiant/etudiant');  
 });
 
-
-
+router.get('/quiz', (req, res) => {
+    res.render("etudiant/quiz");
+});
 
 module.exports = router;
